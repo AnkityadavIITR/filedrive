@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '../ui/button';
 import { User } from 'firebase/auth';
-import { verifyUserEmail } from '@/hooks/firebase/verifyUserEmail';
 import { useEffect, useState } from 'react';
 
 

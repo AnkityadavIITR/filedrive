@@ -1,16 +1,16 @@
 import {  createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
-import toast from "react-hot-toast";
+import { auth } from "../config/firebase";
+import { boolean } from "yup";
 
-export const createUserWithEmail=async({email,password,setLoading,toaster})=>{
-
+export const createUserWithEmail=async({email,password,setLoading})=>{
     try{
         const response=await createUserWithEmailAndPassword(auth,email,password);
+        console.log(response);
         setLoading(false);
-        toast
-
+        return true;  
     }catch(e){
         const errorCode = e.code;
         const errorMessage = e.message;
+        return false;
     }
 }

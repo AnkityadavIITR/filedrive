@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }) => {
     <Provider
       value={{
         currentUser,
+        setCurrentUser,
         isNewUser,
         setNewUser,
         currentUserData,

@@ -10,17 +10,19 @@ import Form from "@/components/auth/loginForm";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { SaveUser } from "@/axios/api/saveUser";
+import useAuth from "@/context/useAuth";
 
 const page = () => {
   const { toast } = useToast();
   const router = useRouter();
+  const {currentUser,setCurrentUser}=useAuth();
 
   const signInWithGoogle = async () => {
     try {
       const userCredential = await signInWithPopup(auth, provider);
       const { user } = userCredential;
-      const { email, uid, displayName, photoURL } = user;
       console.log("user from login", user);
+      setCurrentUser(user);
       toast({
         title: "success",
         description: "logged in",

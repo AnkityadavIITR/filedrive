@@ -6,10 +6,8 @@ import { EyeOff, Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { sendEmailVerification } from "firebase/auth";
 
-const Form = () => {
-  const [loading, setLoading] = useState(false);
+const Form = ({onSubmit,loading,setLoading}) => {
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       name:"",
@@ -25,41 +23,22 @@ const Form = () => {
     }),
   });
 
-  const verifyEmail = async () => {
-    try {
-      const user = auth.currentUser;
-      if (user) {
-        await sendEmailVerification(user);
-        console.log("Email verification sent successfully!");
-        toast.success("email verification is send");
-      } else {
-        throw new Error("User not logged in.");
-      }
-    } catch (error) {
-      console.error("Error sending email verification:", error.message);
-    }
-  };
-
   const handleSignIn = async () => {
     setLoading(true);
-    try{
-
-    }catch(e){
-
-    }
+    onSubmit(formik.values.name,formik.values.email,formik.values.password,setLoading);
   };
 
   return (
     <form onSubmit={handleSignIn} className="w-full">
       <div className="mb-4 text-[#585858] font-semibold mt-10 lg:mt-4">
-        <label className="block mb-1" for="email">
+        <label className="block mb-1" for="name">
           name
         </label>
         <input
           type="name"
-          placeholder="Email"
+          placeholder="name"
           my="2"
-          name="email"
+          name="name"
           value={formik.values.name}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -137,9 +116,7 @@ const Form = () => {
           onClick={handleSignIn}
         >
           {loading ? (
-            <div role="status" className="text-center">
-              <span className="sr-only">Loading...</span>
-            </div>
+            "loading..."
           ) : (
             "Submit"
           )}

@@ -1,16 +1,21 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { auth, provider } from "@/config/firebase";
 import { FaGoogle } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { signInWithPopup } from "firebase/auth";
 import { useToast } from "@/components/ui/use-toast";
 import { setLocalStorage } from "@/lib/utils";
-import Form from "@/components/auth/loginForm";
 import Link from "next/link";
+import Form from "@/components/auth/signupForm";
+import { createUserWithEmail } from "../../../services/createuserwithemailandpassword";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const { toast } = useToast();
+  const [loading,setLoading]=useState(false)
+  const router=useRouter();
+  const [showEmailModal,setShowEmailModal]=useState(false);
 
   const signInWithGoogle = async () => {
     try {
@@ -23,7 +28,7 @@ const page = () => {
         description: "logged in",
       });
       setLocalStorage("token", user.accessToken);
-      
+      router.replace("/dashboard")
     } catch (error) {
       console.log(error);
       toast({
@@ -32,6 +37,25 @@ const page = () => {
       });
     }
   };
+
+  const handleEmailRegistration=async(name,email,password,setLoading)=>{
+    console.log(name,email,password)
+    try{
+      const response=await createUserWithEmail(email,password,setLoading);
+      if(response){
+        router.replace("/dashboard")
+      }
+    }catch(e){
+      toast({
+        title: "error",
+        variant: "destructive",
+        description: "Your account is not created, try again",
+      });
+    }
+
+  }
+
+
   
   return (
     <div className="h-screen w-full flex justify-center items-center">
@@ -52,7 +76,7 @@ const page = () => {
           <hr className="h-px my-3 bg-slate-400 border-0 dark:bg-gray-700 w-2/5" />
         </div>
 
-        <Form />
+        <Form onSubmit={handleEmailRegistration} loading={loading} setLoading={setLoading}/>
         <div className=" flex justify-end gap-x-1">
           <p className="text-[14px] text-gray-500 text-md">
             already signed in ?

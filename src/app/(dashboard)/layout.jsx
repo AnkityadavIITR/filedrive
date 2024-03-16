@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
   const token = getFromLocalStorage("token");
   const saved = getFromLocalStorage("saved") || false;
 
-  console.log(token);
+  // console.log(token);
 
   useEffect(() => {
     if (!getFromLocalStorage("token")) router.replace("/");
@@ -49,6 +49,7 @@ export default function RootLayout({ children }) {
     }
   }, [currentUser, saved, SaveUser]);
 
+
   useEffect(() => {
     console.log(currentUser);
     // Check if currentUser is still null and loadingAuth is false
@@ -61,7 +62,7 @@ export default function RootLayout({ children }) {
   // useEffect to update loadingAuth when currentUser changes
   useEffect(() => {
     if (currentUser) {
-      setLoadingAuth(false); // Set loadingAuth to false when currentUser is available
+      setLoadingAuth(false); 
     }
   }, [currentUser, loadingAuth]);
 
