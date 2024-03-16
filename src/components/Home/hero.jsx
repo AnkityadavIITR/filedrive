@@ -5,7 +5,7 @@ import { FileBox } from "lucide-react";
 
 const Hero = () => {
   return (
-    <div className=" px-6 lg:px-8 h-[85vh] flex container mx-auto">
+    <div className=" px-6 lg:px-8 h-[90vh] flex container mx-auto ">
       <div className="mx-auto max-w-2xl my-auto">
         <FileBox size={100} strokeWidth={1} className="mx-auto" />
 

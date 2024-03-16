@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { auth, provider } from "@/config/firebase";
 import { FaGoogle } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -9,12 +9,13 @@ import { setLocalStorage } from "@/lib/utils";
 import Form from "@/components/auth/loginForm";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { SaveUser } from "@/axios/api/saveUser";
 import useAuth from "@/context/useAuth";
+import { signInWithEmail } from "@/services/signInwithemail";
 
 const page = () => {
   const { toast } = useToast();
   const router = useRouter();
+  const [loading,setLoading]=useState(false);
   const {currentUser,setCurrentUser}=useAuth();
 
   const signInWithGoogle = async () => {
@@ -37,6 +38,17 @@ const page = () => {
       });
     }
   };
+
+  const handleSignIn=async(email,password)=>{
+    try{
+      const response=await signInWithEmail(email,password,setLoading);
+      if(response){
+        router.replace("/dashboard");
+      }
+    }catch(e){
+
+    }
+  }
   return (
     <div className="h-screen w-full flex justify-center items-center">
       <div className="min-w-[400px] p-4 flex-col border rounded-md justify-center border-gray-600 ">
@@ -54,7 +66,7 @@ const page = () => {
           <p>OR</p>
           <hr className="h-px my-3 bg-slate-400 border-0 dark:bg-gray-700 w-2/5" />
         </div>
-        <Form />
+        <Form onSubmit={handleSignIn} loading={loading} setLoading={setLoading}/>
         <div className=" flex justify-end gap-x-1">
           <p className="text-[14px] text-gray-500 text-md">
             don't have an account?

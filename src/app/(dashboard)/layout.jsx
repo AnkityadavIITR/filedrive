@@ -15,8 +15,10 @@ export default function RootLayout({ children }) {
   const router = useRouter();
   const { currentUser } = useAuth();
   const [loadingAuth, setLoadingAuth] = useState(true);
+  const emailVerified=getFromLocalStorage("isEmailVerified") ||false;
   const token = getFromLocalStorage("token");
-  const saved = getFromLocalStorage("saved") || false;
+  const saved = getFromLocalStorage("isUserSaved") || false;
+  
 
   // console.log(token);
 
@@ -29,7 +31,7 @@ export default function RootLayout({ children }) {
       currentUser &&
       currentUser?.metadata?.creationTime ===
         currentUser?.metadata?.lastSignInTime &&
-      !saved
+      !saved && !emailVerified
     ) {
       console.log("yes", currentUser);
       const userObj = {
@@ -49,9 +51,12 @@ export default function RootLayout({ children }) {
     }
   }, [currentUser, saved, SaveUser]);
 
+  // useEffect(()=>{
+  //   if(currentUser && )
+  // })
+
 
   useEffect(() => {
-    console.log(currentUser);
     // Check if currentUser is still null and loadingAuth is false
     if (!currentUser && !loadingAuth && getFromLocalStorage("token")) {
       removeFromLocalStorage("token");
@@ -69,7 +74,10 @@ export default function RootLayout({ children }) {
   return (
     <main className="w-full h-full">
       <Navbar/>
+      <div className="w-full">
+        <Sidebar/>
         {children}
+      </div>
     </main>
   );
 }

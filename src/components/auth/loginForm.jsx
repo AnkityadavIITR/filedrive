@@ -5,8 +5,7 @@ import * as Yup from "yup";
 import { EyeOff, Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-const Form = () => {
-  const [loading, setLoading] = useState(false);
+const Form = ({onSubmit, loading, setLoading}) => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const formik = useFormik({
@@ -22,26 +21,9 @@ const Form = () => {
     }),
   });
 
-  const handleSignIn = async () => {
+  const handleSignIn =() => {
     setLoading(true);
-    try {
-      console.log("email", formik.values.email);
-      console.log("password", formik.values.password);
-      const user = await signInWithEmailAndPassword(
-        auth,
-        formik.values.email,
-        formik.values.password
-      );
-      console.log("user", user);
-      localStorage.setItem("token", user.accessToken);
-      toast.success("You're succefully logged In");
-      setTimeout(() => {
-        push("/dashboard");
-      }, 1000);
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
+    onSubmit(formik.values.email, formik.values.password);
   };
 
   return (
@@ -114,9 +96,7 @@ const Form = () => {
           onClick={handleSignIn}
         >
           {loading ? (
-            <div role="status" className="text-center">
-              <span className="sr-only">Loading...</span>
-            </div>
+            "loading.."
           ) : (
             "Submit"
           )}
