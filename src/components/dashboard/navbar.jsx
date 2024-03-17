@@ -4,14 +4,17 @@ import { FileBox, LogOut } from "lucide-react";
 import TeamPopUp from "./teams";
 import { SignOut } from "../../services/signout";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 const Navbar = () => {
   const { currentUser } = useAuth();
-  const router=useRouter();
+  const router = useRouter();
   return (
     <div className="flex justify-between px-10 pt-3 pb-2 border-b fixed top-0 w-full z-20 bg-white">
-      <FileBox size={36} strokeWidth={1} className="" />
+      <Link href={"/dashboard"} >
+        <FileBox size={36} strokeWidth={1} className="" />
+      </Link>
       <div className="flex gap-x-4">
-        <TeamPopUp/>
+        <TeamPopUp />
         <div className="flex gap-x-2">
           <img
             src={currentUser?.photoURL}
@@ -19,7 +22,11 @@ const Navbar = () => {
             className="w-10 rounded-full text-[10px]"
           />
         </div>
-        <LogOut strokeWidth={1.25} onClick={()=>SignOut(router)} className="my-auto border p-1 hover:bg-slate-100" />
+        <LogOut
+          strokeWidth={1.25}
+          onClick={() => SignOut(router)}
+          className="my-auto border p-1 hover:bg-slate-100"
+        />
       </div>
     </div>
   );

@@ -1,6 +1,8 @@
-"use client"
-import React, { useState } from "react";
+"use client";
+
+import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,10 +40,9 @@ const frameworks = [
     label: "Astro",
   },
 ];
-
-function ComboboxDemo() {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
+function TeamPopUp() {
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState("");
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -53,8 +54,8 @@ function ComboboxDemo() {
           className="w-[200px] justify-between"
         >
           {value
-            ? frameworks?.find((framework) => framework.value === value)?.label
-            : "Select Organization"}
+            ? frameworks.find((framework) => framework.value === value)?.label
+            : "Your teams"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -63,7 +64,7 @@ function ComboboxDemo() {
           <CommandInput placeholder="Search framework..." />
           <CommandEmpty>No framework found.</CommandEmpty>
           <CommandGroup>
-            {frameworks?.map((framework) => (
+            {frameworks.map((framework) => (
               <CommandItem
                 key={framework.value}
                 value={framework.value}
@@ -87,5 +88,4 @@ function ComboboxDemo() {
     </Popover>
   );
 }
-
-export default ComboboxDemo;
+export default TeamPopUp;

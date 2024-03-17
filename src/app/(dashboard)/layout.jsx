@@ -31,13 +31,14 @@ export default function RootLayout({ children }) {
       currentUser &&
       currentUser?.metadata?.creationTime ===
         currentUser?.metadata?.lastSignInTime &&
-      !saved && !emailVerified
+      !saved
     ) {
       console.log("yes", currentUser);
       const userObj = {
         name: currentUser?.displayName,
         email: currentUser?.email,
         photo: currentUser?.photoURL,
+        emailVerified:currentUser?.emailVerified
       };
       async function SaveUserDb() {
         try {
@@ -51,9 +52,6 @@ export default function RootLayout({ children }) {
     }
   }, [currentUser, saved, SaveUser]);
 
-  // useEffect(()=>{
-  //   if(currentUser && )
-  // })
 
 
   useEffect(() => {

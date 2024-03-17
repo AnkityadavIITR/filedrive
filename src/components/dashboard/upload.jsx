@@ -95,7 +95,7 @@ const Upload = ({ data }) => {
       {data?.length > 0 ? (
         data.map((data) => {})
       ) : (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center mt-5">
           <img
             src="/Images/empty.png"
             alt=""

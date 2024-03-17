@@ -6,7 +6,7 @@ import axios from "axios";
 export const SaveUser=async(userdb)=>{
     console.log(userdb);
     try{
-        const response=await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}/user/register`,userdb,{
+        const response=await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URI}/user/data`,{
             headers:{
                 Authorization:`Bearer `+getFromLocalStorage("token")
             },timeout:50000,
