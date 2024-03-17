@@ -10,10 +10,13 @@ import Link from "next/link";
 import Form from "@/components/auth/signupForm";
 import { createUserWithEmail } from "../../../services/createuserwithemailandpassword";
 import { useRouter } from "next/navigation";
+import useAuth from "@/context/useAuth";
 
 const page = () => {
   const { toast } = useToast();
   const [loading,setLoading]=useState(false)
+  const {setCurrentUser,currentUser}=useAuth();
+  
   const router=useRouter();
   const [showEmailModal,setShowEmailModal]=useState(false);
 
@@ -21,13 +24,14 @@ const page = () => {
     try {
       const userCredential = await signInWithPopup(auth, provider);
       const { user } = userCredential;
-      const { email, uid, displayName, photoURL } = user;
+      // const { email, uid, displayName, photoURL } = user;
       console.log("user from register", user);
       toast({
         title: "success",
         description: "logged in",
       });
       setLocalStorage("token", user.accessToken);
+      setCurrentUser(user);
       router.replace("/dashboard")
     } catch (error) {
       console.log(error);

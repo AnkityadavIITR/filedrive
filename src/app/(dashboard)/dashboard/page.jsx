@@ -8,10 +8,10 @@ import { getUserData } from '@/axios/api/getUserData'
 import { useToast } from '@/components/ui/use-toast'
 import { getFromLocalStorage } from '@/lib/utils'
 const page = () => {
-  const {currentUserData,setCurrentUserData}=useAuth();
+  const {currentUserData,setCurrentUserData,currentUser}=useAuth();
   const [loading,setLoading]=useState(true);
-  const isUserSave=getFromLocalStorage("isSavedUser") || false;
-  const toast=useToast();
+  const isUserSave=getFromLocalStorage("isUserSaved") || false;
+  const {toast}=useToast();
 
   useEffect(()=>{
     async function getUserDetail(){
@@ -25,17 +25,18 @@ const page = () => {
         }
       }catch(e){
         toast({
-          title:"Internal error"
+          title:"error",
+          message:"internal error"
         })
       }
     }
     console.log("check",isUserSave);
 
-    if(currentUserData==null && isUserSave ){
+    if( currentUser && currentUserData==null && isUserSave ){
       getUserDetail();
     }
 
-  },[setCurrentUserData,currentUserData])
+  },[setCurrentUserData,currentUserData,isUserSave, currentUser])
 
   const dummyArray = [
     { title: "Example 1", url: "https://www.example1.com" },

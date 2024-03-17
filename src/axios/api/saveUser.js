@@ -13,8 +13,6 @@ export const SaveUser=async(userdb)=>{
             
         });
         console.log(response);
-        setLocalStorage("isSavedUser",true);
-
         return response;
     }catch(e){
         console.log(e);
