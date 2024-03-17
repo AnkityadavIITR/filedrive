@@ -1,10 +1,10 @@
 import axiosInstance from "../baseuri";
 import useAuth from "@/context/useAuth";
 import { getFromLocalStorage } from "@/lib/utils";
+import { data } from "autoprefixer";
 import axios from "axios";
 
-export const SaveUser=async(userdb)=>{
-    console.log(userdb);
+export const getUserData=async(setCurrentUserData,setLoading)=>{
     try{
         const response=await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URI}/user/data`,{
             headers:{
@@ -13,9 +13,10 @@ export const SaveUser=async(userdb)=>{
             
         });
         console.log(response);
-        return response;
+        setCurrentUserData(response.data.user);
+        return true;
     }catch(e){
         console.log(e);
-        return e;
+        return false;
     }
 }

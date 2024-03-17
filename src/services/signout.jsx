@@ -6,6 +6,8 @@ export async function SignOut(router){
     try{
         const response=await signOut(auth);
         removeFromLocalStorage("token");
+        
+        localStorage.clear();
         router.replace("/")
     }catch(e){
         console.log(e)

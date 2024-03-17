@@ -34,7 +34,7 @@ const page = () => {
       console.log(error);
       toast({
         title: "error",
-        description: "logged in",
+        description: "can't log in",
       });
     }
   };

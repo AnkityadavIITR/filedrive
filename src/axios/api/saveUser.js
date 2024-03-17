@@ -1,6 +1,6 @@
 import axiosInstance from "../baseuri";
 import useAuth from "@/context/useAuth";
-import { getFromLocalStorage } from "@/lib/utils";
+import { getFromLocalStorage, setLocalStorage } from "@/lib/utils";
 import axios from "axios";
 
 export const SaveUser=async(userdb)=>{
@@ -13,6 +13,8 @@ export const SaveUser=async(userdb)=>{
             
         });
         console.log(response);
+        setLocalStorage("isSavedUser",true);
+
         return response;
     }catch(e){
         console.log(e);

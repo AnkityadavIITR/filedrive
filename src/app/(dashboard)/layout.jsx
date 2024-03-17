@@ -43,7 +43,7 @@ export default function RootLayout({ children }) {
       async function SaveUserDb() {
         try {
           const { data } = await SaveUser(userObj);
-          if (data.success) setLocalStorage("saved", true);
+          if (data.success) setLocalStorage("isUserSaved", true);
         } catch (e) {
           console.log(e);
         }
