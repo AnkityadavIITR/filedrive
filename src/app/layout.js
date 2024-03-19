@@ -6,6 +6,8 @@ import { TeamProvider } from "@/context/useTeam";
 import { DataProvider } from "@/context/useData";
 import { TeamDataProvider } from "@/context/userTeamData";
 import { TeamModalProvider } from "@/context/useTeamModal";
+import { TeamInvitationProvider } from "@/context/useInviteModal";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -21,7 +23,9 @@ export default function RootLayout({ children }) {
           <TeamProvider>
             <DataProvider>
               <TeamDataProvider>
-                <TeamModalProvider>{children}</TeamModalProvider>
+                <TeamInvitationProvider>
+                  <TeamModalProvider>{children}</TeamModalProvider>
+                </TeamInvitationProvider>
               </TeamDataProvider>
             </DataProvider>
           </TeamProvider>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getFromLocalStorage } from "@/lib/utils";
-export async function getTeamData(teamId,setTeamData){
+export async function getTeamData(teamId,setTeamData,setLoading){
     try{
         const {data}=await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URI}/user/teams/${teamId}`,{
             headers:{
@@ -9,7 +9,8 @@ export async function getTeamData(teamId,setTeamData){
         });
         console.log(data);
         if(data.success){
-            setTeamData(data.files)
+            setTeamData(data.files);
+            setLoading(false);
             return true
         }else{
             return false

@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, UserPlus } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -21,11 +21,13 @@ import {
 import { useState } from "react";
 import useTeam from "@/context/useTeam";
 import useTeamModal from "@/context/useTeamModal";
+import useTeamInvite from "@/context/useInviteModal";
 
 function TeamPopUp() {
   const router = useRouter();
   const { userTeam } = useTeam();
-  const { setShowTeamModal, setPurposeModal } = useTeamModal();
+  const { setShowTeamModal, setPurposeModal} = useTeamModal();
+  const {setInviteId,setShowInviteModal}=useTeamInvite()
   const handleSelect = (id) => {
     router.replace(`/dashboard/teams/${id}`);
   };
@@ -36,6 +38,11 @@ function TeamPopUp() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+  const handleClick=(team)=>{
+    console.log(team);
+    setShowInviteModal(true);
+    setInviteId(team.shortId);
+  }
 
   return (
     <>
@@ -51,15 +58,20 @@ function TeamPopUp() {
           <DropdownMenuSeparator />
           {userTeam?.map((team) => {
             return (
-              <DropdownMenuItem
-                key={team._id}
-                onClick={() => handleSelect(team._id)}
-              >
-                {team.name}
-              </DropdownMenuItem>
+              <div className="flex justify-between mb-1">
+                <DropdownMenuItem
+                  key={team._id}
+                  onClick={() => handleSelect(team._id)}
+                >
+                  {team.name}
+                </DropdownMenuItem>
+                <DropdownMenuItem className="border rounded-md" onClick={()=>handleClick(team)}>
+                  <UserPlus size={20} strokeWidth={1.25} />
+                </DropdownMenuItem>
+              </div>
             );
           })}
-
+          <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => {
               setPurposeModal("join");
@@ -84,6 +96,7 @@ function TeamPopUp() {
             </svg>{" "}
             Join team
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => {
               setPurposeModal("create");

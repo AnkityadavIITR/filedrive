@@ -1,8 +1,5 @@
 import { getFromLocalStorage, setLocalStorage } from "@/lib/utils";
 import axios from "axios";
-import { auth } from "@/config/firebase";
-// import { refreshFirebaseToken } from "@/services/getRefreshToken";
-
 export const getUserData = async (
   setCurrentUserData,
   setLoading
@@ -23,9 +20,13 @@ export const getUserData = async (
       setLoading(false);
       setCurrentUserData(data.files);
       return true;
-    }else return false
+    }else {
+      setLoading(false);
+      return false;
+    }
   } catch (e) {
     console.log(e);
+    setLoading(false);
     return false;
   }
 };

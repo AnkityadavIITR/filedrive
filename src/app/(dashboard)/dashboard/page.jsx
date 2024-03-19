@@ -1,14 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import Upload from "@/components/dashboard/uploadUserFile";
-import Sidebar from "@/components/dashboard/sidebar";
 import { useEffect } from "react";
 import useAuth from "@/context/useAuth";
 import { getUserData } from "@/axios/api/getUserData";
 import { useToast } from "@/components/ui/use-toast";
 import { getFromLocalStorage, setLocalStorage } from "@/lib/utils";
 import LoadingData from "@/components/dashboard/loadingData";
-import UploadBtn from "@/components/dashboard/uploadBtn";
 import useData from "@/context/useData";
 import { Button } from "@/components/ui/button";
 import UploadFile from "@/components/modals/uploadmodal";
@@ -55,11 +52,8 @@ const page = () => {
     { title: "Example 4", url: "https://www.example4.com" },
     { title: "Example 5", url: "https://www.example5.com" },
   ];
-  const handleDataUpload = () => {
-    // console.log(formik.values);
-  };
+
   const handleModal = () => {
-    console.log("click");
     setShowUploadModal(true);
   };
   return (
@@ -74,6 +68,7 @@ const page = () => {
             <UploadFile
               showModal={showUploadModal}
               setShowModal={setShowUploadModal}
+              purpose={"personalUpload"}
             />
           )}
           {loading && <LoadingData />}
@@ -82,7 +77,8 @@ const page = () => {
             userData.map((data) => {
               return <DataCard file={data} />;
             })}
-          {!loading && !userData.length && (
+            <DataCard file={dummyArray[0]}/>
+          {!loading && !userData?.length && (
             <div className="flex justify-center items-center mt-5">
               <img
                 src="/Images/empty.png"

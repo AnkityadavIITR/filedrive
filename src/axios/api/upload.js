@@ -1,15 +1,15 @@
 import axios from "axios";
 import { getFromLocalStorage } from "@/lib/utils";
-export async function uploadDataOnTeams(
+export async function uploadUserData(
   title,
   content,
-  setTeamData,
+  setUserData,
   setLoading,
   setUploadModal
 ) {
   try {
     const { data } = await axios.post(
-      `${process.env.NEXT_PUBLIC_SERVER_URI}/user/teams/upload/${teamId}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URI}/user/uploadData`,
       { title: title, content: content },
       {
         headers: {
@@ -18,21 +18,20 @@ export async function uploadDataOnTeams(
         timeout: 50000,
       }
     );
-    console.log(data);
     if (data.success) {
-        setTeamData((prev) => [...prev, data.file]);
-        setLoading(false);
-        setUploadModal(false);
-        return true;
-      } else {
-        setLoading(false);
-        setUploadModal(false);
-        return false;
-      }
-    } catch (e) {
-      console.log(e);
+      setUserData((prev) => [...prev, data.file]);
+      setLoading(false);
+      setUploadModal(false);
+      return true;
+    } else {
       setLoading(false);
       setUploadModal(false);
       return false;
     }
+  } catch (e) {
+    console.log(e);
+    setLoading(false);
+    setUploadModal(false);
+    return false;
+  }
 }

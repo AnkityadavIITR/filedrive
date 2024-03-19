@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import UploadBtn from "./uploadBtn";
+import { DataCard } from "./dataCard";
 
 const Upload = ({ data,onSubmit }) => {
   return (
@@ -10,7 +11,9 @@ const Upload = ({ data,onSubmit }) => {
         <UploadBtn onSubmit={onSubmit}/>
       </div>
       {data?.length > 0 ? (
-        data.map((data) => {})
+        data.map((data) => {
+          return <DataCard file={data}/>
+        })
       ) : (
         <div className="flex justify-center items-center mt-5">
           <img

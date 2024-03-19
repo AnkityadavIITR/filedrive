@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { X } from "lucide-react";
 import { Button } from "../ui/button";
 
-function UploadFile({ showModal, setShowModal }) {
+function UploadFile({ showModal, setShowModal, purpose,params }) {
   const [fileTitle, setFileTitle] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -20,6 +20,11 @@ function UploadFile({ showModal, setShowModal }) {
     setLoading(true);
     console.log("Title:", fileTitle);
     console.log("Selected file:", selectedFile);
+    if(purpose=="personalUpload"){
+
+    }else{
+      
+    }
   }
 
   return (
