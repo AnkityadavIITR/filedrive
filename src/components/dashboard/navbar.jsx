@@ -5,16 +5,22 @@ import TeamPopUp from "./teams";
 import { SignOut } from "../../services/signout";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import useTeam from "@/context/useTeam";
+import { getFromLocalStorage } from "@/lib/utils";
 const Navbar = () => {
   const { currentUser } = useAuth();
+
   const router = useRouter();
   return (
-    <div className="flex justify-between px-10 pt-3 pb-2 border-b fixed top-0 w-full z-20 bg-white">
-      <Link href={"/dashboard"} >
-        <FileBox size={36} strokeWidth={1} className="" />
+    <div className="flex justify-between px-10 pt-3 items-center pb-2 border-b fixed top-0 w-full z-20 bg-white">
+      <Link href={"/dashboard"}>
+        <div className="flex gap-2">
+          <FileBox size={36} strokeWidth={1} className="" />
+          <h1 className="font-semibold text-[30px]">FileDrive</h1>
+        </div>
       </Link>
       <div className="flex gap-x-4">
-        <TeamPopUp />
+        <TeamPopUp/>
         <div className="flex gap-x-2">
           <img
             src={currentUser?.photoURL}

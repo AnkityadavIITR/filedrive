@@ -10,17 +10,21 @@ import useAuth from "@/context/useAuth";
 import { SaveUser } from "@/axios/api/saveUser";
 import Sidebar from "@/components/dashboard/sidebar";
 import Navbar from "@/components/dashboard/navbar";
+// import { getUserData } from "@/axios/api/getUserData";
+import { useToast } from "@/components/ui/use-toast";
+import { getTeams } from "@/axios/api/getUserTeam";
+import useTeam from "@/context/useTeam";
+
 
 export default function RootLayout({ children }) {
   const router = useRouter();
-  const { currentUser } = useAuth();
+  const {currentUser}=useAuth();
+  const {userTeam,setUserTeam}=useTeam();  
+  const isUserSave=getFromLocalStorage("isUserSaved") || false;
+  const {toast}=useToast();
   const [loadingAuth, setLoadingAuth] = useState(true);
-  const emailVerified=getFromLocalStorage("isEmailVerified") ||false;
   const token = getFromLocalStorage("token");
   const saved = getFromLocalStorage("isUserSaved") || false;
-  
-
-  // console.log(token);
 
   useEffect(() => {
     if (!getFromLocalStorage("token")) router.replace("/");
@@ -52,17 +56,38 @@ export default function RootLayout({ children }) {
     }
   }, [currentUser, saved, SaveUser]);
 
+  useEffect(()=>{
+    if(currentUser && currentUser?.metadata?.creationTime!=currentUser?.metadata?.lastSignInTime){
+      setLocalStorage("isUserSaved", true);
+    }
+  },[currentUser,saved])
+
+  useEffect(()=>{
+    if(currentUser && saved){
+      async function getUserTeam(){
+        try{
+          const response =await getTeams(setUserTeam);
+          console.log("teams",response)
+          console.log(userTeam);
+          if(!response){
+            console.log("error");
+          }
+        }catch(e){
+          console.log(e);
+        }
+      }
+      getUserTeam();
+    }
+  },[currentUser,saved])
 
 
   useEffect(() => {
-    // Check if currentUser is still null and loadingAuth is false
     if (!currentUser && !loadingAuth && getFromLocalStorage("token")) {
       removeFromLocalStorage("token");
       router.replace("/");
     }
   }, [currentUser, loadingAuth]);
 
-  // useEffect to update loadingAuth when currentUser changes
   useEffect(() => {
     if (currentUser) {
       setLoadingAuth(false); 

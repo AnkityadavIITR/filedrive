@@ -1,18 +1,20 @@
-import axios from "axios"
+import axios from "axios";
 import { getFromLocalStorage } from "@/lib/utils";
-export const CreateTeam=async(teamName,setUserTeam)=>{
+export async function getTeamData(teamId,setTeamData){
     try{
-        const {data}=await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}/user/teams/create`,{teamName:teamName},{
+        const {data}=await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URI}/user/teams/${teamId}`,{
             headers:{
                 Authorization:`Bearer `+getFromLocalStorage("token")
             },timeout:50000,
         });
+        console.log(data);
         if(data.success){
-            setUserTeam(prev=>[...prev,data.team]);
+            setTeamData(data.files)
             return true
         }else{
             return false
         }
+
     }catch(e){
         console.log(e);
         return false

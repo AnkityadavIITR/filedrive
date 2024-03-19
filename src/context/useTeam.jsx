@@ -1,15 +1,22 @@
-"use client"
-import { createContext,useContext, useState } from "react"
+"use client";
+import { createContext, useContext, useState} from "react";
+// import { getFromLocalStorage } from "@/lib/utils";
+const context = createContext();
+const { Provider } = context;
 
-const context=createContext();
-const {Provider}=context;
-
-export function TeamProvider({children}){
-    const [teamData,setTeamData]=useState()
-    return <Provider
-       teamData={teamData}
-       setTeamData={setTeamData}
+export function TeamProvider({ children }) {
+    const [userTeam, setUserTeam] = useState(null);
+  return (
+    <Provider
+      value={{
+        userTeam,
+        setUserTeam,
+      }}
     >
-        {children}
+      {children}
     </Provider>
+  );
 }
+
+const useTeam = () => useContext(context);
+export default useTeam;

@@ -1,55 +1,100 @@
-import { Copy } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+"use client";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { X } from "lucide-react";
+import { Button } from "../ui/button";
 
-export function DialogCloseButton() {
+function UploadFile({ showModal, setShowModal }) {
+  const [fileTitle, setFileTitle] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setLoading(true);
+    console.log("Title:", fileTitle);
+    console.log("Selected file:", selectedFile);
+  }
+
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Share</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Share link</DialogTitle>
-          <DialogDescription>
-            Anyone who has this link will be able to view this.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="flex items-center space-x-2">
-          <div className="grid flex-1 gap-2">
-            <Label htmlFor="link" className="sr-only">
-              Link
-            </Label>
-            <Input
-              id="link"
-              defaultValue="https://ui.shadcn.com/docs/installation"
-              readOnly
-            />
-          </div>
-          <Button type="submit" size="sm" className="px-3">
-            <span className="sr-only">Copy</span>
-            <Copy className="h-4 w-4" />
-          </Button>
-        </div>
-        <DialogFooter className="sm:justify-start">
-          <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              Close
-            </Button>
-          </DialogClose>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  )
+    <AnimatePresence>
+      {showModal && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 999,
+          }}
+          onClick={() => setShowModal(false)} // Close modal when clicking outside
+        >
+          <motion.div
+            initial={{ y: -100 }}
+            animate={{ y: 0 }}
+            exit={{ y: -100 }}
+            style={{
+              boxShadow: "0 0 2px rgba(0, 0, 0, 0.25)",
+            }}
+            className="min-w-[30%] bg-white px-5 py-5"
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+          >
+            <div className="flex justify-between">
+              <h1 className="text-[30px] font-semibold">Upload your file</h1>
+              <X onClick={() => setShowModal(false)} />
+            </div>
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-y-5 ">
+              <div className="grid w-full  items-center gap-2">
+                <Label htmlFor="title">File title</Label>
+                <Input
+                  id="title"
+                  type="name"
+                  name="fileTitle"
+                  value={fileTitle}
+                  onChange={(e) => setFileTitle(e.target.value)}
+                />
+                {fileTitle == "" && (
+                  <p className="text-red-500 text-xs italic">required!</p>
+                )}
+              </div>
+              <div className="grid w-full items-center gap-2">
+                <Label htmlFor="picture">upload File</Label>
+                <Input
+                  id="picture"
+                  type="file"
+                  name="selectedFile"
+                  onChange={handleFileChange}
+                />
+                {fileTitle == "" && (
+                  <p className="text-red-500 text-xs italic">required!</p>
+                )}
+              </div>
+              <Button
+                type="submit"
+                disabled={!fileTitle || !selectedFile || loading}
+              >
+                {loading ? "Uploading..." : "Submit"}
+              </Button>
+            </form>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 }
+export default UploadFile;

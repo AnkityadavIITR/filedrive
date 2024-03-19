@@ -11,7 +11,6 @@ const { Provider } = context;
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [isNewUser, setNewUser] = useState(false);
-  const [currentUserData, setCurrentUserData] = useState(null);
   const [token, setToken] = useState(
     window.localStorage.getItem("token") || ""
   );
@@ -42,8 +41,6 @@ export const AuthProvider = ({ children }) => {
         setCurrentUser,
         isNewUser,
         setNewUser,
-        currentUserData,
-        setCurrentUserData,
       }}
     >
       {children}

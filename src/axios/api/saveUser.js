@@ -1,5 +1,3 @@
-import axiosInstance from "../baseuri";
-import useAuth from "@/context/useAuth";
 import { getFromLocalStorage, setLocalStorage } from "@/lib/utils";
 import axios from "axios";
 

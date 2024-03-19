@@ -1,8 +1,8 @@
 import axios from "axios"
 import { getFromLocalStorage } from "@/lib/utils";
-export const CreateTeam=async(teamName,setUserTeam)=>{
+export const JoinTeam=async(shortId,setUserTeam)=>{
     try{
-        const {data}=await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}/user/teams/create`,{teamName:teamName},{
+        const {data}=await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}/user/teams/join`,{shortId:shortId},{
             headers:{
                 Authorization:`Bearer `+getFromLocalStorage("token")
             },timeout:50000,

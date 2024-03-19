@@ -2,6 +2,10 @@ import { Inter } from "next/font/google";
 import { AuthProvider } from "../context/useAuth";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { TeamProvider } from "@/context/useTeam";
+import { DataProvider } from "@/context/useData";
+import { TeamDataProvider } from "@/context/userTeamData";
+import { TeamModalProvider } from "@/context/useTeamModal";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -14,7 +18,13 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
-          {children}
+          <TeamProvider>
+            <DataProvider>
+              <TeamDataProvider>
+                <TeamModalProvider>{children}</TeamModalProvider>
+              </TeamDataProvider>
+            </DataProvider>
+          </TeamProvider>
           <Toaster />
         </AuthProvider>
       </body>
