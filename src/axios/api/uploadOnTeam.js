@@ -5,12 +5,14 @@ export async function uploadDataOnTeams(
   content,
   setTeamData,
   setLoading,
-  setUploadModal
+  setUploadModal,
+  fileType,
+  params
 ) {
   try {
     const { data } = await axios.post(
-      `${process.env.NEXT_PUBLIC_SERVER_URI}/user/teams/upload/${teamId}`,
-      { title: title, content: content },
+      `${process.env.NEXT_PUBLIC_SERVER_URI}/user/teams/upload/${params}`,
+      { title: title, content: content, type:fileType},
       {
         headers: {
           Authorization: `Bearer ` + getFromLocalStorage("token"),

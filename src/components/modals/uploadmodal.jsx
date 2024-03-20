@@ -5,25 +5,59 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { X } from "lucide-react";
 import { Button } from "../ui/button";
+import { uploadFile } from "@/services/uploadFile";
+import { uploadUserData } from "@/axios/api/upload";
+import useData from "@/context/useData";
+import { toast } from "../ui/use-toast";
+import { uploadDataOnTeams } from "@/axios/api/uploadOnTeam";
+import userTeamData from "@/context/userTeamData";
 
-function UploadFile({ showModal, setShowModal, purpose,params }) {
+function UploadFile({ showModal, setShowModal, purpose, params }) {
   const [fileTitle, setFileTitle] = useState("");
+  const {setUserData}=useData();
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [fileType,setFileType]=useState()
+  const {setTeamData}=userTeamData();
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
   };
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
     console.log("Title:", fileTitle);
     console.log("Selected file:", selectedFile);
-    if(purpose=="personalUpload"){
-
-    }else{
-      
+    setFileTitle(selectedFile.type);
+    if (purpose == "personalUpload") {
+      const res = await uploadFile(selectedFile);
+      console.log("res",res)
+      if(res!=""){
+        const response=await uploadUserData(fileTitle,res,setUserData,setLoading,setShowModal,fileType);
+        if(response){
+          console.log("uploaded",response);
+        }
+      }else{
+        toast({
+          title:"error",
+          description:"file couldn't upload"
+        })
+      }
+    } else {
+      const res = await uploadFile(selectedFile);
+      console.log("res",res)
+      if(res!=""){
+        const response=await uploadDataOnTeams(fileTitle,res,setTeamData,setLoading,setShowModal,fileType,params);
+        if(response){
+          console.log("uploaded",response);
+        }
+      }else{
+        toast({
+          title:"error",
+          description:"file couldn't upload"
+        })
+      }
     }
   }
 

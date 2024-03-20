@@ -9,16 +9,16 @@ import useTeam from "@/context/useTeam";
 import { getFromLocalStorage } from "@/lib/utils";
 const Navbar = () => {
   const { currentUser } = useAuth();
+  const router=useRouter();
 
-  const router = useRouter();
   return (
     <div className="flex justify-between px-10 pt-3 items-center pb-2 border-b fixed top-0 w-full z-20 bg-white">
-      <Link href={"/dashboard"}>
+      <button onClick={()=>router.push("/dashboard")}>
         <div className="flex gap-2">
           <FileBox size={36} strokeWidth={1} className="" />
           <h1 className="font-semibold text-[30px]">FileDrive</h1>
         </div>
-      </Link>
+      </button>
       <div className="flex gap-x-4">
         <TeamPopUp/>
         <div className="flex gap-x-2">

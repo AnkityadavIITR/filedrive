@@ -14,8 +14,6 @@ import useTeamModal from "@/context/useTeamModal";
 import TeamModal from "@/components/modals/teamModal";
 import useTeamInvite from "@/context/useInviteModal";
 import InviteModal from "@/components/modals/inviteModal";
-import useDeleteModal from "@/context/useDeleteModal";
-import DeleteModal from "@/components/modals/deleteAlertModal";
 const page = () => {
   const { currentUser } = useAuth();
   const { userData, setUserData } = useData();
@@ -23,8 +21,6 @@ const page = () => {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const { showInviteModal } = useTeamInvite();
-  const {deleteModal}=useDeleteModal()
-
 
   const isUserSave = getFromLocalStorage("isUserSaved") || false;
   const { toast } = useToast();
@@ -84,7 +80,7 @@ const page = () => {
             {!loading &&
               userData?.length > 0 &&
               userData.map((data) => {
-                return <DataCard file={data} type={"personal"}/>;
+                return <DataCard file={data} />;
               })}
           </div>
           {!loading && !userData?.length && (
@@ -99,7 +95,6 @@ const page = () => {
         </div>
         {showTeamModal && <TeamModal />}
         {showInviteModal && <InviteModal />}
-        {deleteModal && <DeleteModal/>}
       </div>
     </main>
   );

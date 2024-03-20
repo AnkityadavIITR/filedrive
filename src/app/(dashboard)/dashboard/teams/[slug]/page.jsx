@@ -13,32 +13,42 @@ import InviteModal from "@/components/modals/inviteModal";
 import useTeamModal from "@/context/useTeamModal";
 import TeamModal from "@/components/modals/teamModal";
 import LoadingData from "@/components/dashboard/loadingData";
+import useDeleteModal from "@/context/useDeleteModal";
+import DeleteModal from "@/components/modals/deleteAlertModal";
+import useTeamParam from "@/context/useTeamParams";
 
 function Data({ params }) {
-  // const [data, setData] = useState([]);
   const router = useRouter();
-  // console.log(params);
+
   const { teamData, setTeamData } = userTeamData();
-  const {showInviteModal}=useTeamInvite();
-  const {showTeamModal}=useTeamModal();
+  const { showInviteModal } = useTeamInvite();
+  const { showTeamModal } = useTeamModal();
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [loading, setLoading] = useState(true);
-  const token=getFromLocalStorage("token") || "";
+  const token = getFromLocalStorage("token") || "";
+  const { deleteModal } = useDeleteModal();
+  const {setTeamParam}=useTeamParam();
+  setTeamParam(params)
+
   useEffect(() => {
-    async function getData(){
-      try{
-        const response= await getTeamData(params.slug,setTeamData,setLoading);
-        if(response){
+    async function getData() {
+      try {
+        const response = await getTeamData(
+          params.slug,
+          setTeamData,
+          setLoading
+        );
+        if (response) {
           toast({
-            title:"success",
-            message:"teams data "
-          })
+            title: "success",
+            message: "teams data ",
+          });
         }
-      }catch(e){
+      } catch (e) {
         console.log(e);
       }
     }
-    if(token){
+    if (token) {
       console.log("getting");
       getData();
     }
@@ -63,11 +73,13 @@ function Data({ params }) {
             />
           )}
           {loading && <LoadingData />}
-          {!loading &&
-            teamData?.length > 0 &&
-            teamData.map((data) => {
-              return <DataCard file={data} />;
-            })}
+          <div className="w-full grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {!loading &&
+              teamData?.length > 0 &&
+              teamData.map((data) => {
+                return <DataCard file={data} type={"teams"} />;
+              })}
+          </div>
           {!loading && !teamData.length && (
             <div className="flex justify-center items-center mt-5">
               <img
@@ -78,9 +90,9 @@ function Data({ params }) {
             </div>
           )}
         </div>
-        {showTeamModal && <TeamModal/>}
-        {showInviteModal && <InviteModal/>}
-
+        {showTeamModal && <TeamModal />}
+        {showInviteModal && <InviteModal />}
+        {deleteModal && <DeleteModal />}
       </div>
     </main>
   );

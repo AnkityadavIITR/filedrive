@@ -58,7 +58,7 @@ function TeamPopUp() {
           <DropdownMenuSeparator />
           {userTeam?.map((team) => {
             return (
-              <div className="flex justify-between mb-1">
+              <div className="flex justify-between mb-1 gap-2">
                 <DropdownMenuItem
                   key={team._id}
                   onClick={() => handleSelect(team._id)}

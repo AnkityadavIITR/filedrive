@@ -7,6 +7,8 @@ import { DataProvider } from "@/context/useData";
 import { TeamDataProvider } from "@/context/userTeamData";
 import { TeamModalProvider } from "@/context/useTeamModal";
 import { TeamInvitationProvider } from "@/context/useInviteModal";
+import { DeleteteModalProvider } from "@/context/useDeleteModal";
+import { TeamParamProvider } from "@/context/useTeamParams";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +26,13 @@ export default function RootLayout({ children }) {
             <DataProvider>
               <TeamDataProvider>
                 <TeamInvitationProvider>
-                  <TeamModalProvider>{children}</TeamModalProvider>
+                  <TeamModalProvider>
+                    <DeleteteModalProvider>
+                      <TeamParamProvider>
+                      {children}
+                      </TeamParamProvider>
+                      </DeleteteModalProvider>
+                  </TeamModalProvider>
                 </TeamInvitationProvider>
               </TeamDataProvider>
             </DataProvider>

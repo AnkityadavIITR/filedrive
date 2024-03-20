@@ -3,13 +3,12 @@ import { createContext, useContext, useState} from "react";
 const context = createContext();
 const { Provider } = context;
 
-export function TeamProvider({ children }) {
-    const [userTeam, setUserTeam] = useState(null);
+export function TeamParamProvider({ children }) {
+    const [teamParam, setTeamParam] = useState("");
   return (
     <Provider
       value={{
-        userTeam,
-        setUserTeam,
+        teamParam, setTeamParam
       }}
     >
       {children}
@@ -17,5 +16,5 @@ export function TeamProvider({ children }) {
   );
 }
 
-const useTeam = () => useContext(context);
-export default useTeam;
+const useTeamParam = () => useContext(context);
+export default useTeamParam;

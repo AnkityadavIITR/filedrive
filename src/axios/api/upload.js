@@ -5,12 +5,13 @@ export async function uploadUserData(
   content,
   setUserData,
   setLoading,
-  setUploadModal
+  setUploadModal,
+  fileType
 ) {
   try {
     const { data } = await axios.post(
       `${process.env.NEXT_PUBLIC_SERVER_URI}/user/uploadData`,
-      { title: title, content: content },
+      { title: title, content: content,type:fileType },
       {
         headers: {
           Authorization: `Bearer ` + getFromLocalStorage("token"),
@@ -18,6 +19,7 @@ export async function uploadUserData(
         timeout: 50000,
       }
     );
+    console.log(data);
     if (data.success) {
       setUserData((prev) => [...prev, data.file]);
       setLoading(false);
