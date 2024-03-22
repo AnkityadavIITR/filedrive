@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 import { Button } from "../ui/button";
 import useDeleteModal from "@/context/useDeleteModal";
 import { useRouter } from 'next/router'
-import userTeamData from "@/context/userTeamData";
+import useTeamData from "@/context/useTeamData";
 import useData from "@/context/useData";
 import { deleteUserFile } from "@/axios/api/deleteUserFile";
 import { deleteTeamsFile } from "@/axios/api/deleteTeamFile";
@@ -13,7 +13,7 @@ import { toast } from "../ui/use-toast";
 import useTeamParam from "@/context/useTeamParams";
 function DeleteModal() {
   const [loading,setLoading]=useState(false)
-  const {setTeamData}=userTeamData()
+  const {setTeamData}=useTeamData()
   const {userData,setUserData}=useData();
   const { deleteModal, setDeletemodal, deleteOf, setDeleteOf, deleteId,setDeleteId } = useDeleteModal();
   const {teamParam, setTeamParam}=useTeamParam()

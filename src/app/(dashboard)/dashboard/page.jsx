@@ -5,7 +5,7 @@ import Image from "next/image";
 import useAuth from "@/context/useAuth";
 import { getUserData } from "@/axios/api/getUserData";
 import { useToast } from "@/components/ui/use-toast";
-import { getFromLocalStorage, setLocalStorage } from "@/lib/utils";
+import { getFromLocalStorage } from "@/lib/utils";
 import LoadingData from "@/components/dashboard/loadingData";
 import useData from "@/context/useData";
 import { Button } from "@/components/ui/button";
@@ -51,7 +51,7 @@ const DashboardPage = () => {
     if (currentUser && userData == null && isUserSave) {
       getUserDetail();
     }
-  }, [setUserData, userData, isUserSave, currentUser]);
+  }, [setUserData, userData, isUserSave, currentUser,toast]);
 
   const dummyArray = [
     { title: "Example 1", url: "https://www.example1.com" },
@@ -84,7 +84,7 @@ const DashboardPage = () => {
             {!loading &&
               userData?.length > 0 &&
               userData.map((data) => {
-                return <DataCard file={data} type={"personal"} />;
+                return <DataCard file={data} type={"personal"} key={userData._id} />;
               })}
           </div>
           {!loading && !userData?.length && (

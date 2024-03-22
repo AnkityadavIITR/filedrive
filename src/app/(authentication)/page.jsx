@@ -13,7 +13,7 @@ export default function Home() {
     if(getFromLocalStorage("token")){
       router.push("/dashboard")
     }
-  },[token, saved])
+  },[token, saved,router])
   return (
     <main className="flex min-h-screen flex-col ">
       <Navbar/>

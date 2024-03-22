@@ -15,8 +15,8 @@ import { signInWithEmail } from "@/services/signInwithemail";
 const LoginPage = () => {
   const { toast } = useToast();
   const router = useRouter();
-  const [loading,setLoading]=useState(false);
-  const {currentUser,setCurrentUser}=useAuth();
+  const [loading, setLoading] = useState(false);
+  const { currentUser, setCurrentUser } = useAuth();
 
   const signInWithGoogle = async () => {
     try {
@@ -39,16 +39,14 @@ const LoginPage = () => {
     }
   };
 
-  const handleSignIn=async(email,password)=>{
-    try{
-      const response=await signInWithEmail(email,password,setLoading);
-      if(response){
+  const handleSignIn = async (email, password) => {
+    try {
+      const response = await signInWithEmail(email, password, setLoading);
+      if (response) {
         router.replace("/dashboard");
       }
-    }catch(e){
-
-    }
-  }
+    } catch (e) {}
+  };
   return (
     <div className="h-screen w-full flex justify-center items-center">
       <div className="min-w-[400px] p-4 flex-col border rounded-md justify-center border-gray-600 ">
@@ -66,10 +64,14 @@ const LoginPage = () => {
           <p>OR</p>
           <hr className="h-px my-3 bg-slate-400 border-0 dark:bg-gray-700 w-2/5" />
         </div>
-        <Form onSubmit={handleSignIn} loading={loading} setLoading={setLoading}/>
+        <Form
+          onSubmit={handleSignIn}
+          loading={loading}
+          setLoading={setLoading}
+        />
         <div className=" flex justify-end gap-x-1">
           <p className="text-[14px] text-gray-500 text-md">
-            don't have an account?
+            don&apos;t have an account?
           </p>
           <Link
             href={"/register"}

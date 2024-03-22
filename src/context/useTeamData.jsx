@@ -17,5 +17,5 @@ export function TeamDataProvider({ children }) {
   );
 }
 
-const userTeamData = () => useContext(context);
-export default userTeamData;
+const useTeamData = () => useContext(context);
+export default useTeamData;

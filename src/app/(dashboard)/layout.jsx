@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
 
   useEffect(() => {
     if (!getFromLocalStorage("token")) router.replace("/");
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     if (
@@ -54,7 +54,7 @@ export default function RootLayout({ children }) {
       }
       SaveUserDb();
     }
-  }, [currentUser, saved, SaveUser]);
+  }, [currentUser, saved]);
 
   useEffect(()=>{
     if(currentUser && currentUser?.metadata?.creationTime!=currentUser?.metadata?.lastSignInTime){
@@ -67,8 +67,8 @@ export default function RootLayout({ children }) {
       async function getUserTeam(){
         try{
           const response =await getTeams(setUserTeam);
-          console.log("teams",response)
-          console.log(userTeam);
+          // console.log("teams",response)
+          // console.log(userTeam);
           if(!response){
             console.log("error");
           }
@@ -78,7 +78,7 @@ export default function RootLayout({ children }) {
       }
       getUserTeam();
     }
-  },[currentUser,saved])
+  },[currentUser,saved,setUserTeam])
 
 
   useEffect(() => {
@@ -86,7 +86,7 @@ export default function RootLayout({ children }) {
       removeFromLocalStorage("token");
       router.replace("/");
     }
-  }, [currentUser, loadingAuth]);
+  }, [currentUser, loadingAuth,router]);
 
   useEffect(() => {
     if (currentUser) {

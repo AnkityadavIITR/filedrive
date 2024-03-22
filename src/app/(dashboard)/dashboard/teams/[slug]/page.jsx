@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import userTeamData from "@/context/userTeamData";
+import useTeamData from "@/context/useTeamData";
 import { getTeamData } from "@/axios/api/getTeamData";
 import { getFromLocalStorage } from "@/lib/utils";
 import { toast } from "@/components/ui/use-toast";
@@ -21,7 +21,7 @@ import Image from "next/image";
 function Data({ params }) {
   const router = useRouter();
 
-  const { teamData, setTeamData } = userTeamData();
+  const { teamData, setTeamData } = useTeamData();
   const { showInviteModal } = useTeamInvite();
   const { showTeamModal } = useTeamModal();
   const [showUploadModal, setShowUploadModal] = useState(false);
@@ -30,12 +30,13 @@ function Data({ params }) {
   const { deleteModal } = useDeleteModal();
   const {setTeamParam}=useTeamParam();
   setTeamParam(params)
+  const {slug}=params;
 
   useEffect(() => {
     async function getData() {
       try {
         const response = await getTeamData(
-          params.slug,
+          slug,
           setTeamData,
           setLoading
         );
@@ -53,7 +54,7 @@ function Data({ params }) {
       console.log("getting");
       getData();
     }
-  }, []);
+  }, [slug, token,setTeamData]);
   const handleModal = () => {
     setShowUploadModal(true);
   };
@@ -78,7 +79,7 @@ function Data({ params }) {
             {!loading &&
               teamData?.length > 0 &&
               teamData.map((data) => {
-                return <DataCard file={data} type={"teams"} />;
+                return <DataCard file={data} type={"teams"} key={teamData._id} />;
               })}
           </div>
           {!loading && !teamData.length && (

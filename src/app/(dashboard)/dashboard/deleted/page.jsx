@@ -48,7 +48,7 @@ const DeletedPage = () => {
     if (currentUser && userData == null && isUserSave) {
       getUserDetail();
     }
-  }, [setUserData, userData, isUserSave, currentUser]);
+  }, [setUserData, userData, isUserSave, currentUser,toast]);
 
 
   const handleModal = () => {
@@ -74,7 +74,7 @@ const DeletedPage = () => {
             {!loading &&
               userData?.length > 0 &&
               userData.map((data) => {
-                return <DataCard file={data} />;
+                return <DataCard file={data} key={userData._id} />;
               })}
           </div>
           {!loading && !userData?.length && (

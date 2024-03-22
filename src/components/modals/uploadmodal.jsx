@@ -10,7 +10,7 @@ import { uploadUserData } from "@/axios/api/upload";
 import useData from "@/context/useData";
 import { toast } from "../ui/use-toast";
 import { uploadDataOnTeams } from "@/axios/api/uploadOnTeam";
-import userTeamData from "@/context/userTeamData";
+import useTeamData from "@/context/useTeamData";
 
 function UploadFile({ showModal, setShowModal, purpose, params }) {
   const [fileTitle, setFileTitle] = useState("");
@@ -18,7 +18,7 @@ function UploadFile({ showModal, setShowModal, purpose, params }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [fileType,setFileType]=useState()
-  const {setTeamData}=userTeamData();
+  const {setTeamData}=useTeamData();
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
