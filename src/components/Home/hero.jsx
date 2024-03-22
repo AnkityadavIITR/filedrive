@@ -10,11 +10,11 @@ const Hero = () => {
         <FileBox size={100} strokeWidth={1} className="mx-auto" />
 
         <div className="text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Publish your passions, in your way
+          <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+            The organized workspace. Share with confidence.
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Create a unique and beautiful blog easily.
+            Share and access files instantly
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link

@@ -20,6 +20,7 @@ function DeleteModal() {
 
 
   async function handleDelete(){
+    setLoading(true);
     try{
       if(deleteOf=="personal"){
         console.log(deleteId);

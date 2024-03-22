@@ -27,7 +27,8 @@ function TeamPopUp() {
   const router = useRouter();
   const { userTeam } = useTeam();
   const { setShowTeamModal, setPurposeModal} = useTeamModal();
-  const {setInviteId,setShowInviteModal}=useTeamInvite()
+  const {setInviteId,setShowInviteModal}=useTeamInvite();
+  const [currentTeam,setCurrentTeam]=useState(null)
   const handleSelect = (id) => {
     router.replace(`/dashboard/teams/${id}`);
   };
@@ -49,7 +50,7 @@ function TeamPopUp() {
       <DropdownMenu>
         <DropdownMenuTrigger className="border p-2 w-[150px] rounded-md">
           <div className="flex gap-4">
-            <h1>Your teams</h1>
+            <h1>{!currentTeam? "Your teams" : currentTeam }</h1>
             <ChevronDown strokeWidth={1.25} size={"20px"} />
           </div>
         </DropdownMenuTrigger>
@@ -61,7 +62,10 @@ function TeamPopUp() {
               <div className="flex justify-between mb-1 gap-2">
                 <DropdownMenuItem
                   key={team._id}
-                  onClick={() => handleSelect(team._id)}
+                  onClick={() => {
+                    handleSelect(team._id)
+                    setCurrentTeam(team.name)
+                  }}
                 >
                   {team.name}
                 </DropdownMenuItem>
@@ -106,8 +110,8 @@ function TeamPopUp() {
             {" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              width="22"
+              height="22"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"

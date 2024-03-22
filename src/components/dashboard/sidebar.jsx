@@ -15,17 +15,33 @@ const Sidebar = () => {
       link: "/dashboard/deleted",
     },
   ];
-  const [click,setClick]=useState("")
+  const [click, setClick] = useState("");
+  const { currentUser } = useAuth();
   return (
     <div className="w-[16vw] min-h-screen px-4 border-r fixed">
-      <div className="items-center mt-[100px]">
+      <div className="mt-[50px] flex justify-center">
+        {currentUser ? (
+          <img
+            src={currentUser?.photoURL}
+            alt="photo"
+            className="200px rounded-full"
+          />
+        ) : (
+          <img src="" alt="photo" className="200px rounded-full" />
+        )}
+      </div>
+      <div className="items-center mt-[30px]">
         <div className="flex w-full flex-col gap-4 ">
           {options?.map((data) => {
             return (
-              <Button className="" variant={click ===data.title ? "outline" : ""} onClick={()=>{
-                setClick(data.title)
-                router.push(data.link)}
-              }>
+              <Button
+                className=""
+                variant={click === data.title ? "outline" : ""}
+                onClick={() => {
+                  setClick(data.title);
+                  router.push(data.link);
+                }}
+              >
                 {data.title}
               </Button>
             );

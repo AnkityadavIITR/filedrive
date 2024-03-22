@@ -17,7 +17,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Trash2 } from "lucide-react";
+import { Trash2, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import useDeleteModal from "@/context/useDeleteModal";
 
@@ -64,7 +64,19 @@ export function DataCard({ file,type,params }) {
                 setDeleteId(file._id);
 
               }}>
-                <Trash2 strokeWidth={1.25} size={20} className="" /> Delete
+                <Trash2 strokeWidth={1.25} size={20} className="" />{" "} Delete
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => {
+                if(type=="teams"){
+                  console.log("check",type);
+                  setDeleteOf("teams")
+                }else {
+                 setDeleteOf("personal")
+                }
+                setDeletemodal(true);
+                setDeleteId(file._id);
+              }}>
+                <ExternalLink strokeWidth={1.25} size={20} />{" "} Share link
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
