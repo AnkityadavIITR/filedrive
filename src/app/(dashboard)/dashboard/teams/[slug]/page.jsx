@@ -16,6 +16,7 @@ import LoadingData from "@/components/dashboard/loadingData";
 import useDeleteModal from "@/context/useDeleteModal";
 import DeleteModal from "@/components/modals/deleteAlertModal";
 import useTeamParam from "@/context/useTeamParams";
+import Image from "next/image";
 
 function Data({ params }) {
   const router = useRouter();
@@ -82,10 +83,12 @@ function Data({ params }) {
           </div>
           {!loading && !teamData.length && (
             <div className="flex justify-center items-center mt-5">
-              <img
+              <Image
                 src="/Images/empty.png"
                 alt=""
                 className="max-w-[300px] mx-auto "
+                width={300}
+                height={300}
               />
             </div>
           )}

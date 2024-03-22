@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import useAuth from "@/context/useAuth";
+import Image from "next/image";
 import { getUserData } from "@/axios/api/getUserData";
 import { useToast } from "@/components/ui/use-toast";
 import { getFromLocalStorage, setLocalStorage } from "@/lib/utils";
@@ -14,7 +15,7 @@ import useTeamModal from "@/context/useTeamModal";
 import TeamModal from "@/components/modals/teamModal";
 import useTeamInvite from "@/context/useInviteModal";
 import InviteModal from "@/components/modals/inviteModal";
-const page = () => {
+const DeletedPage = () => {
   const { currentUser } = useAuth();
   const { userData, setUserData } = useData();
   const { showTeamModal } = useTeamModal();
@@ -49,13 +50,6 @@ const page = () => {
     }
   }, [setUserData, userData, isUserSave, currentUser]);
 
-  const dummyArray = [
-    { title: "Example 1", url: "https://www.example1.com" },
-    { title: "Example 2", url: "https://www.example2.com" },
-    { title: "Example 3", url: "https://www.example3.com" },
-    { title: "Example 4", url: "https://www.example4.com" },
-    { title: "Example 5", url: "https://www.example5.com" },
-  ];
 
   const handleModal = () => {
     setShowUploadModal(true);
@@ -85,10 +79,12 @@ const page = () => {
           </div>
           {!loading && !userData?.length && (
             <div className="flex justify-center items-center mt-5">
-              <img
+              <Image
                 src="/Images/empty.png"
                 alt=""
                 className="max-w-[300px] mx-auto "
+                width={300}
+                height={300}
               />
             </div>
           )}
@@ -100,4 +96,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default DeletedPage;

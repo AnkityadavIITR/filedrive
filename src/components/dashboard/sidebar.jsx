@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import useAuth from "@/context/useAuth";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 const Sidebar = () => {
   const router = useRouter();
   const options = [
@@ -21,13 +22,21 @@ const Sidebar = () => {
     <div className="w-[16vw] min-h-screen px-4 border-r fixed">
       <div className="mt-[50px] flex justify-center">
         {currentUser ? (
-          <img
+          <Image
             src={currentUser?.photoURL}
             alt="photo"
-            className="200px rounded-full"
+            className="w-[200px] h-[200px] rounded-full"
+            height={200}
+            width={200}
           />
         ) : (
-          <img src="" alt="photo" className="200px rounded-full" />
+          <Image
+          src={""}
+          alt="photo"
+          className="w-[200px] h-[200px] rounded-full"
+          height={200}
+          width={200}
+        />
         )}
       </div>
       <div className="items-center mt-[30px]">
@@ -35,6 +44,7 @@ const Sidebar = () => {
           {options?.map((data) => {
             return (
               <Button
+              key={data.title}
                 className=""
                 variant={click === data.title ? "outline" : ""}
                 onClick={() => {

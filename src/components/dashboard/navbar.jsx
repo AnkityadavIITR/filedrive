@@ -4,9 +4,7 @@ import { FileBox, LogOut } from "lucide-react";
 import TeamPopUp from "./teams";
 import { SignOut } from "../../services/signout";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import useTeam from "@/context/useTeam";
-import { getFromLocalStorage } from "@/lib/utils";
+import Image from "next/image";
 const Navbar = () => {
   const { currentUser } = useAuth();
   const router=useRouter();
@@ -22,10 +20,12 @@ const Navbar = () => {
       <div className="flex gap-x-4">
         <TeamPopUp/>
         <div className="flex gap-x-2">
-          <img
+          <Image
             src={currentUser?.photoURL}
             alt="user photo"
             className="w-10 rounded-full text-[10px]"
+            width={40}
+            height={40}
           />
         </div>
         <LogOut

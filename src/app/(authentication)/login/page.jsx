@@ -12,7 +12,7 @@ import Link from "next/link";
 import useAuth from "@/context/useAuth";
 import { signInWithEmail } from "@/services/signInwithemail";
 
-const page = () => {
+const LoginPage = () => {
   const { toast } = useToast();
   const router = useRouter();
   const [loading,setLoading]=useState(false);
@@ -83,4 +83,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default LoginPage;

@@ -2,6 +2,7 @@
 import React from "react";
 import UploadBtn from "./uploadBtn";
 import { DataCard } from "./dataCard";
+import Image from "next/image";
 
 const Upload = ({ data,onSubmit }) => {
   return (
@@ -12,14 +13,16 @@ const Upload = ({ data,onSubmit }) => {
       </div>
       {data?.length > 0 ? (
         data.map((data) => {
-          return <DataCard file={data}/>
+          return <DataCard key={data._id} file={data}/>
         })
       ) : (
         <div className="flex justify-center items-center mt-5">
-          <img
+          <Image
             src="/Images/empty.png"
             alt=""
             className="max-w-[300px] mx-auto "
+            height={300}
+            width={300}
           />
         </div>
       )}

@@ -12,7 +12,7 @@ import { createUserWithEmail } from "../../../services/createuserwithemailandpas
 import { useRouter } from "next/navigation";
 import useAuth from "@/context/useAuth";
 
-const page = () => {
+const SignUpPage = () => {
   const { toast } = useToast();
   const [loading,setLoading]=useState(false)
   const {setCurrentUser,currentUser}=useAuth();
@@ -98,4 +98,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default SignUpPage;

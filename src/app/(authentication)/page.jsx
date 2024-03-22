@@ -1,10 +1,7 @@
 "use client"
-import Image from "next/image";
 import Hero from "../../components/Home/hero";
 import Navbar from "../../components/Home/navbar";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../config/firebase";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getFromLocalStorage } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 

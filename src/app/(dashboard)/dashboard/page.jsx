@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useEffect } from "react";
+import Image from "next/image";
 import useAuth from "@/context/useAuth";
 import { getUserData } from "@/axios/api/getUserData";
 import { useToast } from "@/components/ui/use-toast";
@@ -16,15 +17,14 @@ import useTeamInvite from "@/context/useInviteModal";
 import InviteModal from "@/components/modals/inviteModal";
 import useDeleteModal from "@/context/useDeleteModal";
 import DeleteModal from "@/components/modals/deleteAlertModal";
-const page = () => {
+const DashboardPage = () => {
   const { currentUser } = useAuth();
   const { userData, setUserData } = useData();
   const { showTeamModal } = useTeamModal();
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const { showInviteModal } = useTeamInvite();
-  const {deleteModal}=useDeleteModal()
-
+  const { deleteModal } = useDeleteModal();
 
   const isUserSave = getFromLocalStorage("isUserSaved") || false;
   const { toast } = useToast();
@@ -84,25 +84,27 @@ const page = () => {
             {!loading &&
               userData?.length > 0 &&
               userData.map((data) => {
-                return <DataCard file={data} type={"personal"}/>;
+                return <DataCard file={data} type={"personal"} />;
               })}
           </div>
           {!loading && !userData?.length && (
             <div className="flex justify-center items-center mt-5">
-              <img
+              <Image
                 src="/Images/empty.png"
                 alt=""
-                className="max-w-[300px] mx-auto "
-              />
+                className="max-w-[300px] mx-auto"
+                width={300}
+                height={300}
+              ></Image>
             </div>
           )}
         </div>
         {showTeamModal && <TeamModal />}
         {showInviteModal && <InviteModal />}
-        {deleteModal && <DeleteModal/>}
+        {deleteModal && <DeleteModal />}
       </div>
     </main>
   );
 };
 
-export default page;
+export default DashboardPage;
