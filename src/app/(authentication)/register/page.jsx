@@ -47,7 +47,7 @@ const SignUpPage = () => {
     try{
       const response=await createUserWithEmail(email,password,setLoading);
       if(response){
-        router.replace("/dashboard")
+        router.replace("/dashboard");
       }
     }catch(e){
       toast({
