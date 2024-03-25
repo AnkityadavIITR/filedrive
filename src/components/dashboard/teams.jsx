@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
-import { ChevronDown, UserPlus } from "lucide-react";
+import { ChevronsUpDown, UserPlus } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -51,7 +51,7 @@ function TeamPopUp() {
         <DropdownMenuTrigger className="border p-2 w-[150px] rounded-md">
           <div className="flex gap-4">
             <h1>{!currentTeam? "Your teams" : currentTeam }</h1>
-            <ChevronDown strokeWidth={1.25} size={"20px"} />
+            <ChevronsUpDown strokeWidth={1.25} size={20} />
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
