@@ -8,7 +8,7 @@ import Image from "next/image";
 const Navbar = () => {
   const { currentUser } = useAuth();
   const router=useRouter();
-  console.log(currentUser);
+  console.log("user in nav",currentUser);
 
   return (
     <div className="flex justify-between px-10 pt-3 items-center pb-2 border-b fixed top-0 w-full z-20 bg-white">
