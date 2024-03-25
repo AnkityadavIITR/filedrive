@@ -28,6 +28,7 @@ const Navbar = () => {
             width={40}
             height={40}
           />
+          {currentUser?.displayName}
         </div>
         <LogOut
           strokeWidth={1.25}
