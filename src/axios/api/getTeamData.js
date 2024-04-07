@@ -14,10 +14,12 @@ export async function getTeamData(teamId,setTeamData,setLoading){
             return true
         }else{
             return false
+            setLoading(false);
         }
 
     }catch(e){
         console.log(e);
+        setLoading(false);
         return false
     }
 }

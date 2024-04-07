@@ -16,7 +16,6 @@ const LoginPage = () => {
   const { toast } = useToast();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const { currentUser, setCurrentUser } = useAuth();
 
   const signInWithGoogle = async () => {
     try {

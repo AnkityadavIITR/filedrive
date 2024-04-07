@@ -29,12 +29,12 @@ function UploadFile({ showModal, setShowModal, purpose, params }) {
     setLoading(true);
     console.log("Title:", fileTitle);
     console.log("Selected file:", selectedFile);
-    setFileTitle(selectedFile.type);
     if (purpose == "personalUpload") {
       const res = await uploadFile(selectedFile);
+
       console.log("res",res)
       if(res!=""){
-        const response=await uploadUserData(fileTitle,res,setUserData,setLoading,setShowModal,fileType);
+        const response=await uploadUserData(fileTitle,res,setUserData,setLoading,setShowModal,selectedFile.type);
         if(response){
           console.log("uploaded",response);
         }
@@ -48,7 +48,7 @@ function UploadFile({ showModal, setShowModal, purpose, params }) {
       const res = await uploadFile(selectedFile);
       console.log("res",res)
       if(res!=""){
-        const response=await uploadDataOnTeams(fileTitle,res,setTeamData,setLoading,setShowModal,fileType,params);
+        const response=await uploadDataOnTeams(fileTitle,res,setTeamData,setLoading,setShowModal,selectedFile.type,params);
         if(response){
           console.log("uploaded",response);
         }
@@ -89,7 +89,7 @@ function UploadFile({ showModal, setShowModal, purpose, params }) {
             style={{
               boxShadow: "0 0 2px rgba(0, 0, 0, 0.25)",
             }}
-            className="min-w-[30%] bg-white px-5 py-5"
+            className="min-w-[30%] bg-white px-5 py-5 rounded-md"
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
           >
             <div className="flex justify-between">
@@ -112,11 +112,12 @@ function UploadFile({ showModal, setShowModal, purpose, params }) {
                 )}
               </div>
               <div className="grid w-full items-center gap-2">
-                <Label htmlFor="picture">upload File</Label>
+                <Label htmlFor="picture">Upload file</Label>
                 <Input
                   id="picture"
                   type="file"
                   name="selectedFile"
+                  // accept=".jpg, .jpeg, .png, .pdf .xls, .xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                   onChange={handleFileChange}
                 />
                 {fileTitle == "" && (

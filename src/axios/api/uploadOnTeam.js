@@ -9,6 +9,7 @@ export async function uploadDataOnTeams(
   fileType,
   params
 ) {
+  console.log(fileType);
   try {
     const { data } = await axios.post(
       `${process.env.NEXT_PUBLIC_SERVER_URI}/user/teams/upload/${params}`,

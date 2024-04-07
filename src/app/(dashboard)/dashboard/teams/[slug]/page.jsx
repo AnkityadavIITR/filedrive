@@ -26,6 +26,7 @@ function Data({ params }) {
   const { showTeamModal } = useTeamModal();
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [getError,setGetError]=useState(false);
   const token = getFromLocalStorage("token") || "";
   const { deleteModal } = useDeleteModal();
   const {setTeamParam}=useTeamParam();
@@ -45,6 +46,8 @@ function Data({ params }) {
             title: "success",
             message: "teams data ",
           });
+        }else{
+          setGetError(true);
         }
       } catch (e) {
         console.log(e);
@@ -75,14 +78,15 @@ function Data({ params }) {
             />
           )}
           {loading && <LoadingData />}
+          {!loading && getError && <p>GOT ERROR</p> }
           <div className="w-full grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {!loading &&
               teamData?.length > 0 &&
-              teamData.map((data) => {
+              teamData?.map((data) => {
                 return <DataCard file={data} type={"teams"} key={teamData._id} />;
               })}
           </div>
-          {!loading && !teamData.length && (
+          {!loading &&  !getError &&  !teamData?.length && (
             <div className="flex justify-center items-center mt-5">
               <Image
                 src="/Images/empty.png"

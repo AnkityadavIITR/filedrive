@@ -27,8 +27,8 @@ export function DataCard({ file,type,params }) {
     <Card className="w-[320px]">
       <div className="flex justify-between">
         <CardHeader>
-          <CardTitle>File</CardTitle>
-          <CardDescription>{file.title}</CardDescription>
+          <CardTitle>{file.title}</CardTitle>
+          {/* <CardDescription></CardDescription> */}
         </CardHeader>
         <CardHeader>
           <DropdownMenu>

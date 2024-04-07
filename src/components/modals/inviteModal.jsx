@@ -48,7 +48,7 @@ function InviteModal() {
             style={{
               boxShadow: "0 0 2px rgba(0, 0, 0, 0.25)",
             }}
-            className="min-w-[30%] bg-white px-5 py-5"
+            className="min-w-[30%] bg-white px-5 py-5 "
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
           >
             <div className="flex justify-between">

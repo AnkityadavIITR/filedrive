@@ -12,7 +12,7 @@ export const getUserData = async (
         headers: {
           Authorization: `Bearer ` + getFromLocalStorage("token"),
         },
-        timeout: 50000,
+        timeout: 10000,
       }
     );
     console.log(data);

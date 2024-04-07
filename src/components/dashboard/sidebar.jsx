@@ -25,17 +25,17 @@ const Sidebar = () => {
           <Image
             src={currentUser?.photoURL}
             alt="photo"
-            className="w-[200px] h-[200px] rounded-full"
-            height={200}
-            width={200}
+            className="w-[120px] h-[120px] rounded-full"
+            height={120}
+            width={120}
           />
         ) : (
           <Image
           src={""}
           alt="photo"
-          className="w-[200px] h-[200px] rounded-full"
-          height={200}
-          width={200}
+          className="w-[120px] h-[120px] rounded-full"
+          height={120}
+          width={120}
         />
         )}
       </div>

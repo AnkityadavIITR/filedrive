@@ -9,6 +9,7 @@ export async function uploadUserData(
   fileType
 ) {
   try {
+    console.log(fileType);
     const { data } = await axios.post(
       `${process.env.NEXT_PUBLIC_SERVER_URI}/user/uploadData`,
       { title: title, content: content,type:fileType },

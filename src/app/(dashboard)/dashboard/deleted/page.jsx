@@ -15,40 +15,57 @@ import useTeamModal from "@/context/useTeamModal";
 import TeamModal from "@/components/modals/teamModal";
 import useTeamInvite from "@/context/useInviteModal";
 import InviteModal from "@/components/modals/inviteModal";
+import useFetchData from "@/axios/api/useFetchData";
 const DeletedPage = () => {
   const { currentUser } = useAuth();
-  const { userData, setUserData } = useData();
+  // const { userData, setUserData } = useData();
   const { showTeamModal } = useTeamModal();
   const [showUploadModal, setShowUploadModal] = useState(false);
-  const [loading, setLoading] = useState(true);
+  
+  // const [loading, setLoading] = useState(true);
   const { showInviteModal } = useTeamInvite();
 
   const isUserSave = getFromLocalStorage("isUserSaved") || false;
+  const {data, loading, error, refetch}=useFetchData('/deleted-data');
+
   const { toast } = useToast();
 
   useEffect(() => {
-    async function getUserDetail() {
-      try {
-        const response = await getUserData(setUserData, setLoading);
-        if (!response) {
+    if (currentUser && isUserSave) {
+      refetch(); 
+    }
+  }, [currentUser, isUserSave, refetch]);
+
+  useEffect(() => {
+    function getUserDetail() {
+
+      // try {
+      //   const response = await getUserData(setUserData, setLoading);
+      //   if (!response) {
+      //     toast({
+      //       title: "error",
+      //       message: "can't get detail",
+      //     });
+      //   }
+      // } catch (e) {
+      //   toast({
+      //     title: "error",
+      //     message: "internal error",
+      //   });
+      // }
+      if(error){
           toast({
-            title: "error",
-            message: "can't get detail",
-          });
-        }
-      } catch (e) {
-        toast({
           title: "error",
           message: "internal error",
         });
       }
     }
-    console.log("check", isUserSave);
+    // console.log("check", isUserSave);
 
-    if (currentUser && userData == null && isUserSave) {
+    if (currentUser  && isUserSave) {
       getUserDetail();
     }
-  }, [setUserData, userData, isUserSave, currentUser,toast]);
+  }, [isUserSave, currentUser,toast]);
 
 
   const handleModal = () => {
@@ -72,12 +89,12 @@ const DeletedPage = () => {
           {loading && <LoadingData />}
           <div className="w-full grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {!loading &&
-              userData?.length > 0 &&
-              userData.map((data) => {
-                return <DataCard file={data} key={userData._id} />;
+              data?.length > 0 &&
+              data.map((data) => {
+                return <DataCard file={data} key={data._id} />;
               })}
           </div>
-          {!loading && !userData?.length && (
+          {!loading && !data?.length && (
             <div className="flex justify-center items-center mt-5">
               <Image
                 src="/Images/empty.png"
