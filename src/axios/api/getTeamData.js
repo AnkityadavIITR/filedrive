@@ -7,8 +7,8 @@ export async function getTeamData(teamId,setTeamData,setLoading){
                 Authorization:`Bearer `+getFromLocalStorage("token")
             },timeout:50000,
         });
-        console.log(data);
         if(data.success){
+            console.log(data);
             setTeamData(data.files);
             setLoading(false);
             return true
