@@ -15,7 +15,7 @@ export default function Home() {
     }
   },[token, saved,router])
   return (
-    <main className="flex min-h-screen flex-col ">
+    <main className="flex min-h-screen flex-col bg-gra ">
       <Navbar/>
       <Hero/>
     </main>
