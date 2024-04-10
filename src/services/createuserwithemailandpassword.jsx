@@ -7,11 +7,10 @@ export const createUserWithEmail=async(email,password,setLoading)=>{
         console.log("making request")
         const response=await createUserWithEmailAndPassword(auth,email,password);
         console.log(response);
-        setLocalStorage(response.user.accessToken)
+        setLocalStorage("token",response.user.accessToken);
+        setLoading(false);
         return true;
     }catch(e){
-        const errorCode = e.code;
-        const errorMessage = e.message;
         return false;
     }
 }

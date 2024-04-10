@@ -49,7 +49,7 @@ const LoginPage = () => {
   };
   return (
     <div className="h-screen w-full flex justify-center items-center">
-      <div className="min-w-[400px] p-4 flex-col border rounded-md justify-center border-gray-600 ">
+      <div className="w-[90%] md:w-[400px] p-4 flex-col border rounded-md justify-center border-gray-600 ">
         <h1 className="text-[24px] text-semibold">Sign in to account</h1>
         <h2 className="text-[14px] text-gray-500 text-md mt-2">
           Enter your email below to login
