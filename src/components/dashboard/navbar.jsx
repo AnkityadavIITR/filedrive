@@ -15,14 +15,14 @@ const Navbar = () => {
       <button onClick={()=>router.push("/dashboard")}>
         <div className="flex gap-2">
           <FileBox size={36} strokeWidth={1} className="" />
-          <h1 className="font-semibold text-[30px]">FileDrive</h1>
+          <h1 className="font-semibold text-[30px] hidden md:flex">FileDrive</h1>
         </div>
       </button>
       <div className="flex gap-x-4">
         <TeamPopUp/>
         <div className="flex gap-x-2">
           <Image
-            src={currentUser?.photoURL}
+            src={currentUser && currentUser.photoURL ? currentUser.photoURL : ""}
             alt="user photo"
             className="w-10 rounded-full text-[10px]"
             width={40}

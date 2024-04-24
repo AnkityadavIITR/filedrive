@@ -19,9 +19,9 @@ const Sidebar = () => {
   const [click, setClick] = useState("");
   const { currentUser } = useAuth();
   return (
-    <div className="w-[16vw] min-h-screen px-4 border-r fixed">
+    <div className="w-[16vw] min-h-screen px-4 border-r fixed ">
       <div className="mt-[50px] flex justify-center">
-        {currentUser ? (
+        {currentUser && currentUser.photoURL ? (
           <Image
             src={currentUser?.photoURL}
             alt="photo"
@@ -31,7 +31,7 @@ const Sidebar = () => {
           />
         ) : (
           <Image
-          src={""}
+          src={"/Images/user.png"}
           alt="photo"
           className="w-[120px] h-[120px] rounded-full"
           height={120}

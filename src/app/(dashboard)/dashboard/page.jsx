@@ -5,7 +5,7 @@ import Image from "next/image";
 import useAuth from "@/context/useAuth";
 import { getUserData } from "@/axios/api/getUserData";
 import { useToast } from "@/components/ui/use-toast";
-import { getFromLocalStorage } from "@/lib/utils";
+import { getFromLocalStorage, removeFromLocalStorage } from "@/lib/utils";
 import LoadingData from "@/components/dashboard/loadingData";
 import useData from "@/context/useData";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,13 @@ import useTeamInvite from "@/context/useInviteModal";
 import InviteModal from "@/components/modals/inviteModal";
 import useDeleteModal from "@/context/useDeleteModal";
 import DeleteModal from "@/components/modals/deleteAlertModal";
+import { SaveUser } from "@/axios/api/saveUser";
+import { setLocalStorage } from "@/lib/utils";
+import ProfileModal from "@/components/modals/profileModal";
+
+
+import useRegister from "@/context/useRegister";
+
 const DashboardPage = () => {
   const { currentUser } = useAuth();
   const { userData, setUserData } = useData();
@@ -25,14 +32,55 @@ const DashboardPage = () => {
   const [loading, setLoading] = useState(true);
   const { showInviteModal } = useTeamInvite();
   const { deleteModal } = useDeleteModal();
+  const { userName, setUserName } = useRegister();
 
-  const isUserSave = getFromLocalStorage("isUserSaved") || false;
+  const [saved, setSaved] = useState(
+    () => getFromLocalStorage("isUserSaved") || false
+  );
   const { toast } = useToast();
+
+  useEffect(() => {
+    console.log("check");
+    if (
+      currentUser &&
+      currentUser?.metadata?.creationTime ===
+        currentUser?.metadata?.lastSignInTime &&
+      !saved
+    ) {
+      console.log("newUser", currentUser);
+      const userRegister = JSON.parse(localStorage.getItem("userRegistration"));
+      console.log(userRegister);
+      const userObj = {
+        name:
+          currentUser?.displayName !== null
+            ? currentUser?.displayName
+            : userRegister.name,
+        email: currentUser?.email,
+        photo: currentUser?.photoURL,
+        emailVerified: currentUser?.emailVerified,
+      };
+      async function SaveUserDb() {
+        try {
+          const { data } = await SaveUser(userObj);
+          console.log(data);
+          if (data?.success) {
+            setLocalStorage("isUserSaved", true);
+            setSaved(true);
+            removeFromLocalStorage("userRegistration");
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }
+      SaveUserDb();
+    }
+  }, [currentUser, saved]);
 
   useEffect(() => {
     async function getUserDetail() {
       try {
         const response = await getUserData(setUserData, setLoading);
+        console.log(userData);
         if (!response) {
           toast({
             title: "error",
@@ -46,12 +94,12 @@ const DashboardPage = () => {
         });
       }
     }
-    console.log("check", isUserSave);
+    console.log("check", saved);
 
-    if (currentUser && userData == null && isUserSave) {
+    if (currentUser && userData == null && saved) {
       getUserDetail();
     }
-  }, [setUserData, userData, isUserSave, currentUser,toast]);
+  }, [setUserData, userData, saved, currentUser, toast]);
 
   const dummyArray = [
     { title: "Example 1", url: "https://www.example1.com" },
@@ -67,7 +115,7 @@ const DashboardPage = () => {
   return (
     <main>
       <div className="flex mt-[60px]">
-        <div className="px-10 py-10 w-full ml-[16vw] min-h-[92vh] ">
+        <div className="px-10 py-10 w-full md:ml-[16vw] min-h-[92vh] ">
           <div className="flex justify-between items-center mb-10">
             <h1 className="text-[35px] font-semibold">Your files</h1>
             <Button onClick={handleModal}>Upload files</Button>
@@ -84,7 +132,9 @@ const DashboardPage = () => {
             {!loading &&
               userData?.length > 0 &&
               userData.map((data) => {
-                return <DataCard file={data} type={"personal"} key={userData._id} />;
+                return (
+                  <DataCard file={data} type={"personal"} key={userData._id} />
+                );
               })}
           </div>
           {!loading && !userData?.length && (
@@ -102,6 +152,10 @@ const DashboardPage = () => {
         {showTeamModal && <TeamModal />}
         {showInviteModal && <InviteModal />}
         {deleteModal && <DeleteModal />}
+        {/* {!saved &&
+          setTimeout(() => {
+            return <ProfileModal />;
+          }, 2000)} */}
       </div>
     </main>
   );

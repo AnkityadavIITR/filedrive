@@ -58,6 +58,9 @@ function Data({ params }) {
       getData();
     }
   }, [slug, token,setTeamData]);
+
+
+  
   const handleModal = () => {
     setShowUploadModal(true);
   };
