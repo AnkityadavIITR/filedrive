@@ -70,6 +70,8 @@ const DashboardPage = () => {
           }
         } catch (e) {
           console.log(e);
+        }finally
+        {(setLoading(false));
         }
       }
       SaveUserDb();
