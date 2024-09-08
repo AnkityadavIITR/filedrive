@@ -1,6 +1,5 @@
 "use client";
 import { createContext, Context, useState, useContext } from "react";
-import { getFromLocalStorage } from "@/lib/utils";
 const context = createContext();
 const { Provider } = context;
 export function DataProvider({ children }) {

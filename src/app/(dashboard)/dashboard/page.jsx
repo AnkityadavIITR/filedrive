@@ -23,6 +23,7 @@ import ProfileModal from "@/components/modals/profileModal";
 
 
 import useRegister from "@/context/useRegister";
+import { set } from "react-hook-form";
 
 const DashboardPage = () => {
   const { currentUser } = useAuth();
@@ -34,13 +35,14 @@ const DashboardPage = () => {
   const { deleteModal } = useDeleteModal();
   const { userName, setUserName } = useRegister();
 
-  const [saved, setSaved] = useState(
-    () => getFromLocalStorage("isUserSaved") || false
-  );
+  const saved = getFromLocalStorage("isUserSaved") || false;
+  // console.log("saved", saved);
+  // console.log("user data before effecct", userData);
+  
+  
   const { toast } = useToast();
 
   useEffect(() => {
-    console.log("check");
     if (
       currentUser &&
       currentUser?.metadata?.creationTime ===
@@ -75,45 +77,71 @@ const DashboardPage = () => {
         }
       }
       SaveUserDb();
+    }else{
+      console.log("fetching");
+      async function getUserDetail() {
+        try {
+          const response = await getUserData(setUserData, setLoading);
+          console.log(userData);
+          if (!response) {
+            toast({
+              title: "error",
+              message: "can't get detail",
+            });
+          }
+        } catch (e) {
+          toast({
+            title: "error",
+            message: "internal error",
+          });
+        }
+      }
+
+      console.log("currentUser", currentUser);
+      console.log("userData before fetch", userData);
+      
+      console.log("check", saved);
+  
+      if (currentUser && saved) {
+        if(userData==null){
+          console.log("Calling");
+          getUserDetail();
+        }else setLoading(false);
+      }
+
     }
   }, [currentUser, saved]);
 
-  useEffect(() => {
-    async function getUserDetail() {
-      try {
-        const response = await getUserData(setUserData, setLoading);
-        console.log(userData);
-        if (!response) {
-          toast({
-            title: "error",
-            message: "can't get detail",
-          });
-        }
-      } catch (e) {
-        toast({
-          title: "error",
-          message: "internal error",
-        });
-      }
-    }
-    console.log("check", saved);
+  // useEffect(() => {
+  //   async function getUserDetail() {
+  //     try {
+  //       const response = await getUserData(setUserData, setLoading);
+  //       console.log(userData);
+  //       if (!response) {
+  //         toast({
+  //           title: "error",
+  //           message: "can't get detail",
+  //         });
+  //       }
+  //     } catch (e) {
+  //       toast({
+  //         title: "error",
+  //         message: "internal error",
+  //       });
+  //     }
+  //   }
+  //   console.log("check", saved);
 
-    if (currentUser && userData == null && saved) {
-      getUserDetail();
-    }
-  }, [setUserData, userData, saved, currentUser, toast]);
+  //   if (currentUser && userData == null && saved) {
+  //     getUserDetail();
+  //   }
+  // }, [setUserData, userData, saved, currentUser, toast]);
 
-  const dummyArray = [
-    { title: "Example 1", url: "https://www.example1.com" },
-    { title: "Example 2", url: "https://www.example2.com" },
-    { title: "Example 3", url: "https://www.example3.com" },
-    { title: "Example 4", url: "https://www.example4.com" },
-    { title: "Example 5", url: "https://www.example5.com" },
-  ];
 
   const handleModal = () => {
     setShowUploadModal(true);
   };
+
   return (
     <main>
       <div className="flex mt-[60px]">

@@ -10,7 +10,6 @@ import useAuth from "@/context/useAuth";
 
 import Sidebar from "@/components/dashboard/sidebar";
 import Navbar from "@/components/dashboard/navbar";
-// import { getUserData } from "@/axios/api/getUserData";
 import { useToast } from "@/components/ui/use-toast";
 import { getTeams } from "@/axios/api/getUserTeam";
 import useTeam from "@/context/useTeam";
@@ -37,6 +36,8 @@ export default function RootLayout({ children }) {
         currentUser?.metadata?.lastSignInTime
     ) {
       setLocalStorage("isUserSaved", true);
+      console.log("changed or not",getFromLocalStorage("isUserSaved"));
+      
     }
   }, [currentUser, saved]);
 
